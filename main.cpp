@@ -10,6 +10,7 @@ class StringList
     // You may declare other member functions for your test code to call
     void eraseThrees();
     void dump() const;
+    ~StringList();
   private:
     struct Node
     {
@@ -32,6 +33,14 @@ StringList::StringList(string text)
 // You may implement other member functions here for test purposes,
 // but you will not turn them in as part of your submission.
 
+StringList::~StringList() {
+    while (head != nullptr) {
+      Node* temp = head;
+      head = head->next;
+      delete temp;
+    }
+}
+
 // SUBMIT AS YOUR ANSWER ONLY THE CODE BETWEEN THIS COMMENT AND THE
 // COMMENT AFTER THE END OF THE eraseThrees IMPLEMENTATION
 
@@ -39,17 +48,17 @@ void StringList::eraseThrees() {
     int counter = 1;
     Node *p = head;
     Node *prev = nullptr;
-    
     while (p != nullptr) {
         if (counter % 3 == 0) {
             // delete node that p points to
             prev->next = p->next;
             delete p;
         }
-        
-        prev = p;
+        else {
+            prev = p;
+        }
+        p = prev->next;
         counter++;
-        p = p->next;
     }
 }
 
@@ -67,9 +76,18 @@ void StringList::dump() const {
 
 int main()
 {
-  StringList x("treachery");
-  x.eraseThrees();
+    StringList x("treachery");
+    x.eraseThrees();
     x.dump();
+    StringList s("a");
+    s.eraseThrees();
+    s.dump();
+    StringList a("");
+    a.eraseThrees();
+    a.dump();
+    StringList b("it's over han");
+    b.eraseThrees();
+    b.dump();
   // You might put some code here for test purposes, e.g., to verify
   // that x now contains  't'  'r'  'a'  'c'  'e'  'r'
   // You might run some other tests.
